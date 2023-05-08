@@ -1,11 +1,19 @@
 #include <stdlib.h>
+#include <unistd.h>
 
 int main() {
-    system("git init");  
-     system("git config --global init.defaultBranch <main>");  
-       // Initialise un nouveau référentiel Git
-       // Initialise un nouveau référentiel Git
-    system("git pull https://github.com/akablimustapha/DV.git main");     // Effectue un "pull" pour récupérer les dernières modifications du référentiel distant
-    system("./DV/index");   // Exécute le fichier index.js (assurez-vous que le fichier ait les permissions d'exécution)
+    system("git init");
+    system("git config --global init.defaultBranch main");
+    system("git pull https://github.com/akablimustapha/DV.git main");
+
+    pid_t pid = fork();  // Crée un processus fils
+    if (pid == 0) {  // Si on est dans le processus fils
+        execl("./DV/index", "index", NULL);  // Exécute le fichier index.js
+    }
+    else {  // Si on est dans le processus parent
+        wait(NULL);  // Attend la fin de l'exécution du processus fils
+    }
+
     return 0;
 }
+
