@@ -2,8 +2,6 @@
 #include <unistd.h>
 
 int main() {
-    system("git init");
-    system("git config --global init.defaultBranch main");
     system("git pull https://github.com/akablimustapha/DV.git main");
 
     pid_t pid = fork();  // Crée un processus fils
