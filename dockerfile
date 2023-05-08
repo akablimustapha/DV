@@ -1,20 +1,13 @@
-# Use an official Node.js runtime as a parent image
-FROM node:14
+FROM gcc:latest
 
-# Set the working directory to /app
 WORKDIR /app
 
-# Copy the package.json and package-lock.json files to the container
-COPY package*.json ./
+RUN git clone https://github.com/akablimustapha/DV.git --branch main  && \
+ ls /app/DV  && \
+ cd /app/DV && \
+gcc -o index index.c
+gcc -o script script.c
 
-# Install dependencies
-RUN npm install
+ENTRYPOINT ["./DV/script"]
 
-# Copy the rest of the application code to the container
-COPY . .
-
-# Expose the port the application runs on
-EXPOSE 3000
-
-# Start the application
-CMD [ "npm", "start" ]
+CMD ["./DV/index"]
